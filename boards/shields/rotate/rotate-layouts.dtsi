@@ -1,0 +1,46 @@
+// Rotate 键盘物理布局
+// 14个按键 + EC11编码器
+// 布局:
+// ┌────┬────┬────┬────┐
+// │  k1│  k2│  k3│  k4│  第1行 4键
+// ├────┼────┼────┼────┤
+// │  k5│  k6│  k7│  k8│  第2行 4键
+// ├────┼────┼────┼────┤
+// │  k9│ k10│ k11│ k12│  第3行 4键
+// ├────┼────┤         │
+// │ k13│ k14│ 编码器   │  第4行 2键 + 编码器
+// └────┴────┴─────────┘
+
+#include <physical_layouts.dtsi>
+
+/ {
+    default_layout: default_layout {
+        compatible = "zmk,physical-layout";
+        display-name = "Default Layout";
+        transform = <&default_transform>;
+        kscan = <&kscan0>;
+
+        // 按键物理属性: w(宽) h(高) x(横坐标) y(纵坐标) rot(旋转) rx ry(旋转中心)
+        // 每个按键 100x100 单位，4列间距100，行间距100
+        keys  //                     w   h    x    y     rot    rx    ry
+            // 第1行 (4键)
+            = <&key_physical_attrs 100 100    0    0       0     0     0>
+            , <&key_physical_attrs 100 100  100    0       0   100     0>
+            , <&key_physical_attrs 100 100  200    0       0   200     0>
+            , <&key_physical_attrs 100 100  300    0       0   300     0>
+            // 第2行 (4键)
+            , <&key_physical_attrs 100 100    0  100       0     0   100>
+            , <&key_physical_attrs 100 100  100  100       0   100   100>
+            , <&key_physical_attrs 100 100  200  100       0   200   100>
+            , <&key_physical_attrs 100 100  300  100       0   300   100>
+            // 第3行 (4键)
+            , <&key_physical_attrs 100 100    0  200       0     0   200>
+            , <&key_physical_attrs 100 100  100  200       0   100   200>
+            , <&key_physical_attrs 100 100  200  200       0   200   200>
+            , <&key_physical_attrs 100 100  300  200       0   300   200>
+            // 第4行 (2键)
+            , <&key_physical_attrs 100 100    0  300       0     0   300>
+            , <&key_physical_attrs 100 100  100  300       0   100   300>
+            ;
+    };
+};

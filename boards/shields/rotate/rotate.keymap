@@ -22,6 +22,15 @@
 #define FN   1
 
 / {
+    // 自定义编码器行为: 鼠标滚轮
+    behaviors {
+        scroll_encoder: scroll_encoder {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -39,7 +48,7 @@
             >;
 
             // 编码器旋转: 鼠标滚轮上下滚动
-            sensor-bindings = <&msc SCRL_UP SCRL_DOWN>;
+            sensor-bindings = <&scroll_encoder>;
         };
 
         fn_layer {

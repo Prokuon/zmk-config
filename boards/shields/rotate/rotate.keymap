@@ -16,6 +16,11 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
+
+// 增大默认滚动速度，确保每次编码器触发时 &msc 能立即发送非零滚动事件
+// Issue #72 社区验证值
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 140
+
 #include <dt-bindings/zmk/pointing.h>
 
 #define BASE 0
@@ -23,11 +28,16 @@
 
 / {
     // 自定义编码器行为: 鼠标滚轮
+    // 使用 zmk,behavior-sensor-rotate 包装 &msc
     behaviors {
         scroll_encoder: scroll_encoder {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
             bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            // tap-ms 控制 press 和 release 之间的延迟
+            // 250ms 足够让 &msc 的 tick_work (每16ms) 发送约15次滚动事件
+            // Issue #72 社区验证值
+            tap-ms = <250>;
         };
     };
 

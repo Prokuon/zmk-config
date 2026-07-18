@@ -1,0 +1,6 @@
+if SHIELD_SONNET
+
+config ZMK_KEYBOARD_NAME
+    default "Sonnet"
+
+endif # SHIELD_SONNET

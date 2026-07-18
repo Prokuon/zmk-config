@@ -3,8 +3,8 @@
 # for instructions.
 
 file_format: "1"
-id: rotate
-name: Rotate
+id: sonnet
+name: Sonnet
 type: shield
 
 # Set this to a URL that documents the keyboard.

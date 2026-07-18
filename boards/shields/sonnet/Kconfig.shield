@@ -1,0 +1,3 @@
+# Sonnet shield definition
+config SHIELD_SONNET
+    def_bool $(shields_list_contains,sonnet)

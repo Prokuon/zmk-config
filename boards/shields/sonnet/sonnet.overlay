@@ -1,4 +1,4 @@
-// Rotate 键盘 - 14键 + EC11编码器 + 蓝牙
+// Sonnet 键盘 - 14键 + EC11编码器 + 蓝牙
 // 使用 direct GPIO 接线（非正交矩阵）
 // 主控: nice!nano (nRF52840)
 //
@@ -15,7 +15,7 @@
 
 #include <dt-bindings/zmk/matrix_transform.h>
 
-#include "rotate-layouts.dtsi"
+#include "sonnet-layouts.dtsi"
 
 / {
     chosen {

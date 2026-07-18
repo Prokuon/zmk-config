@@ -1,6 +1,0 @@
-if SHIELD_ROTATE
-
-config ZMK_KEYBOARD_NAME
-    default "Rotate"
-
-endif # SHIELD_ROTATE

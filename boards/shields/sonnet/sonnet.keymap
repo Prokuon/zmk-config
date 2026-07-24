@@ -37,12 +37,9 @@
         default_layer {
             display-name = "Base";
             bindings = <
-                // 第1行: Q  W  E  R  T
-                &kp Q    &kp W    &kp E    &kp R    &kp T
-                // 第2行: B  N  A  S  D  F
+                &kp Q    &kp W    &kp E    &kp R    &kp T    &none
                 &kp B    &kp N    &kp A    &kp S    &kp D    &kp F
-                // 第3行: G  H  Z  切层
-                &kp G    &kp H    &kp Z    &to FN
+                &kp G    &kp H    &kp Z    &to FN   &none    &none
             >;
 
             // 编码器旋转: 音量控制
@@ -52,12 +49,9 @@
         fn_layer {
             display-name = "FN";
             bindings = <
-                // 第1行: 1  2  3  4  5
-                &kp N1    &kp N2    &kp N3    &kp N4    &kp N5
-                // 第2行: B  N  6  7  8  9
-                &kp N6     &kp N7     &kp N8    &kp N9    &kp O    &kp P
-                // 第3行: 0  -  =  切回·
-                &kp N0    &kp MINUS &kp EQUAL &to BASE
+                &kp N1    &kp N2    &kp N3    &kp N4    &kp N5    &none
+                &kp N6    &kp N7    &kp N8    &kp N9    &kp PLUS   &kp KPM_ASTERISK
+                &kp N0    &kp MINUS &kp EQUAL &to BASE  &none     &none
             >;
 
             // 编码器旋转: 鼠标滚轮上下滚动

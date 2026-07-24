@@ -16,6 +16,11 @@
 
 #include "sonnet-layouts.dtsi"
 
+// 为 physical-layout 追加必需的 transform 属性
+&default_layout {
+    transform = <&default_transform>;
+};
+
 / {
     chosen {
         zmk,kscan = &kscan0;
@@ -51,8 +56,18 @@
             ;
     };
 
-    // 注意：使用 zmk,kscan-gpio-direct 时，position = input-gpios 列表中的索引
-    // 不需要 matrix-transform，keymap 的 bindings 直接按 position 顺序排列
+    // Direct GPIO 模式下，matrix-transform 将每个按键映射为单行中的一列
+    // 15 个按键 = 15 列，1 行
+    default_transform: keymap_transform_0 {
+        compatible = "zmk,matrix-transform";
+        columns = <15>;
+        rows = <1>;
+        map = <
+            RC(0,0)  RC(0,1)  RC(0,2)  RC(0,3)  RC(0,4)
+            RC(0,5)  RC(0,6)  RC(0,7)  RC(0,8)  RC(0,9)  RC(0,10)
+            RC(0,11) RC(0,12) RC(0,13) RC(0,14)
+        >;
+    };
 
     // EC11 编码器
     encoder: encoder {

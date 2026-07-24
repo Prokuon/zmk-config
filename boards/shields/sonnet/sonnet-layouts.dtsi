@@ -15,7 +15,8 @@
     default_layout: default_layout {
         compatible = "zmk,physical-layout";
         display-name = "Default Layout";
-        transform = <&default_transform>;
+        // 使用 zmk,kscan-gpio-direct，不需要 matrix-transform
+        // keymap 的 bindings 直接按 input-gpios 的 position 顺序排列
         kscan = <&kscan0>;
 
         // 按键物理属性: w(宽) h(高) x(横坐标) y(纵坐标) rot(旋转) rx ry(旋转中心)

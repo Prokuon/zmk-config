@@ -52,19 +52,33 @@
             ;
     };
 
-    // Matrix Transform - 将15个输入映射为 6列 x 3行 的逻辑布局
-    // 第1行: 5键 + 1空位
-    // 第2行: 6键
-    // 第3行: 3键 + 编码器按键 + 2空位
+    // Matrix Transform - 将15个输入按物理布局映射为 6列 x 3行 的逻辑布局
+    // input-gpios 按 S 编号顺序排列（方便接线），map 重新映射到正确的行列位置
+    //
+    // pos0 =S1(D0)  第1行第1列 → RC(0,0)
+    // pos1 =S2(D2)  第1行第2列 → RC(0,1)
+    // pos2 =S3(D3)  第1行第3列 → RC(0,2)
+    // pos3 =S4(D4)  第1行第4列 → RC(0,3)
+    // pos4 =S5(D5)  第1行第5列 → RC(0,4)
+    // pos5 =S6(D6)  第2行第1列 → RC(1,0)
+    // pos6 =S7(D7)  第2行第2列 → RC(1,1)
+    // pos7 =S8(D8)  第2行第3列 → RC(1,2)
+    // pos8 =S9(D9)  第2行第4列 → RC(1,3)
+    // pos9 =S11(D16) 第2行第5列 → RC(1,4)
+    // pos10=S12(D14) 第2行第6列 → RC(1,5)
+    // pos11=S10(D10) 第3行第1列 → RC(2,0)
+    // pos12=S13(D15) 第3行第2列 → RC(2,1)
+    // pos13=S14(D18) 第3行第3列 → RC(2,2)
+    // pos14=S15(D19) 第3行第4列(编码器按键) → RC(2,3)
     default_transform: default_transform {
         compatible = "zmk,matrix-transform";
         columns = <6>;
         rows = <3>;
 
         map = <
-            RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4) RC(0,5)
+            RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4)
             RC(1,0) RC(1,1) RC(1,2) RC(1,3) RC(1,4) RC(1,5)
-            RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5)
+            RC(2,0) RC(2,1) RC(2,2) RC(2,3)
         >;
     };
 

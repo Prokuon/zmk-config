@@ -1,14 +1,30 @@
 // Sonnet 键盘键位映射
 // 14个按键 + EC11编码器
-// 实际物理布局:
+// 实际物理布局（根据第二次测试结果反推）:
 //         ┌────┬────┬────┬────┬────┐
 // 第1行:  │ Q  │ W  │ E  │ R  │ T  │  5键 (S1~S5)
 //         ├────┼────┼────┼────┼────┼────┐
-// 第2行:  │ A  │ S  │ D  │ F  │ G  │ H  │  6键 (S6~S12)
+// 第2行:  │S6* │S7* │ A  │ S  │ D  │ F  │  6键 (*S6/S7无输出)
 //         ├────┼────┼────┤         │
-// 第3行:  │ Z  │ X  │ C  │ 切层  │  3键 + 编码器按键 (S10,S13,S14,S15)
+// 第3行:  │ G  │ H  │ Z  │ 切层  │  3键 + 编码器按键
 //         └────┴────┴────┴──────────┘
-// 编码器按键(S15/D19)在第3行第4列 RC(2,3)，用于切换层
+//
+// matrix 映射（基于第二次测试结果）:
+//   pos0=S1(D0)  → RC(0,0)=Q
+//   pos1=S2(D2)  → RC(0,1)=W
+//   pos2=S3(D3)  → RC(0,2)=E
+//   pos3=S4(D4)  → RC(0,3)=R
+//   pos4=S5(D5)  → RC(0,4)=T
+//   pos5=S6(D6)  → RC(0,5)=&none (无输出)
+//   pos6=S7(D7)  → RC(1,0)=&none (无输出)
+//   pos7=S8(D8)  → RC(1,1)=A
+//   pos8=S9(D9)  → RC(1,2)=S
+//   pos9=S11(D16)→ RC(1,3)=D
+//   pos10=S12(D14)→ RC(1,4)=F
+//   pos11=S10(D10)→ RC(1,5)=G
+//   pos12=S13(D15)→ RC(2,0)=H
+//   pos13=S14(D18)→ RC(2,1)=Z
+//   pos14=S15(D19)→ RC(2,2)=编码器按键(切层)
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
@@ -25,15 +41,11 @@
 
 / {
     // 自定义编码器行为: 鼠标滚轮
-    // 使用 zmk,behavior-sensor-rotate 包装 &msc
     behaviors {
         scroll_encoder: scroll_encoder {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
             bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
-            // tap-ms 控制 press 和 release 之间的延迟
-            // 32ms: tick_work (每16ms) 触发2次, 每次发送值1, 总计2格
-            // 持续时间32ms < 50ms 要求
             tap-ms = <32>;
         };
     };
@@ -43,13 +55,10 @@
 
         default_layer {
             display-name = "Base";
-            // 第1行:  Q      W      E      R      T
-            // 第2行:  A      S      D      F      G      H
-            // 第3行:  Z      X      C      [编码器按键=切层]
             bindings = <
                 &kp Q    &kp W    &kp E    &kp R    &kp T    &none
-                &kp A    &kp S    &kp D    &kp F    &kp G    &kp H
-                &kp Z    &kp X    &kp C    &to FN   &none    &none
+                &none    &kp A    &kp S    &kp D    &kp F    &kp G
+                &kp H    &kp Z    &to FN   &none    &none    &none
             >;
 
             // 编码器旋转: 音量控制
@@ -58,13 +67,10 @@
 
         fn_layer {
             display-name = "FN";
-            // 第1行:  1      2       3       4       5
-            // 第2行:  6      7       8       9       0       -
-            // 第3行:  =      [      ]      [编码器按键=切回]
             bindings = <
                 &kp N1    &kp N2    &kp N3    &kp N4    &kp N5    &none
-                &kp N6    &kp N7    &kp N8    &kp N9    &kp N0    &kp MINUS
-                &kp EQUAL &kp LBKT  &kp RBKT  &to BASE  &none     &none
+                &none     &kp N6    &kp N7    &kp N8    &kp N9    &kp N0
+                &kp MINUS &kp EQUAL &to BASE  &none     &none     &none
             >;
 
             // 编码器旋转: 鼠标滚轮上下滚动

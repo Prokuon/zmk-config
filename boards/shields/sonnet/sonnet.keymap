@@ -1,30 +1,11 @@
 // Sonnet 键盘键位映射
 // 14个按键 + EC11编码器
-// 实际物理布局（根据第二次测试结果反推）:
-//         ┌────┬────┬────┬────┬────┐
-// 第1行:  │ Q  │ W  │ E  │ R  │ T  │  5键 (S1~S5)
-//         ├────┼────┼────┼────┼────┼────┐
-// 第2行:  │S6* │S7* │ A  │ S  │ D  │ F  │  6键 (*S6/S7无输出)
-//         ├────┼────┼────┤         │
-// 第3行:  │ G  │ H  │ Z  │ 切层  │  3键 + 编码器按键
-//         └────┴────┴────┴──────────┘
+// input-gpios 已按物理布局从上到下、从左到右排列
+// position 直接对应物理位置
 //
-// matrix 映射（基于第二次测试结果）:
-//   pos0=S1(D0)  → RC(0,0)=Q
-//   pos1=S2(D2)  → RC(0,1)=W
-//   pos2=S3(D3)  → RC(0,2)=E
-//   pos3=S4(D4)  → RC(0,3)=R
-//   pos4=S5(D5)  → RC(0,4)=T
-//   pos5=S6(D6)  → RC(0,5)=&none (无输出)
-//   pos6=S7(D7)  → RC(1,0)=&none (无输出)
-//   pos7=S8(D8)  → RC(1,1)=A
-//   pos8=S9(D9)  → RC(1,2)=S
-//   pos9=S11(D16)→ RC(1,3)=D
-//   pos10=S12(D14)→ RC(1,4)=F
-//   pos11=S10(D10)→ RC(1,5)=G
-//   pos12=S13(D15)→ RC(2,0)=H
-//   pos13=S14(D18)→ RC(2,1)=Z
-//   pos14=S15(D19)→ RC(2,2)=编码器按键(切层)
+// 第1行: pos0=S1  pos1=S2  pos2=S3  pos3=S4  pos4=S5
+// 第2行: pos5=S6  pos6=S7  pos7=S8  pos8=S9  pos9=S11 pos10=S12
+// 第3行: pos11=S10 pos12=S13 pos13=S14 pos14=S15(编码器按键)
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
@@ -56,9 +37,12 @@
         default_layer {
             display-name = "Base";
             bindings = <
-                &kp Q    &kp W    &kp E    &kp R    &kp T    &none
-                &none    &kp A    &kp S    &kp D    &kp F    &kp G
-                &kp H    &kp Z    &to FN   &none    &none    &none
+                // 第1行: Q  W  E  R  T
+                &kp Q    &kp W    &kp E    &kp R    &kp T
+                // 第2行: B  N  A  S  D  F
+                &kp B    &kp N    &kp A    &kp S    &kp D    &kp F
+                // 第3行: G  H  Z  切层
+                &kp G    &kp H    &kp Z    &to FN
             >;
 
             // 编码器旋转: 音量控制
@@ -68,9 +52,12 @@
         fn_layer {
             display-name = "FN";
             bindings = <
-                &kp N1    &kp N2    &kp N3    &kp N4    &kp N5    &none
-                &none     &kp N6    &kp N7    &kp N8    &kp N9    &kp N0
-                &kp MINUS &kp EQUAL &to BASE  &none     &none     &none
+                // 第1行: 1  2  3  4  5
+                &kp N1    &kp N2    &kp N3    &kp N4    &kp N5
+                // 第2行: B  N  6  7  8  9
+                &kp N6     &kp N7     &kp N8    &kp N9    &kp O    &kp P
+                // 第3行: 0  -  =  切回·
+                &kp N0    &kp MINUS &kp EQUAL &to BASE
             >;
 
             // 编码器旋转: 鼠标滚轮上下滚动

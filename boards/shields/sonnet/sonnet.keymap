@@ -4,11 +4,11 @@
 //         ┌────┬────┬────┬────┬────┐
 // 第1行:  │ S1 │ S2 │ S3 │ S4 │ S5 │  5键
 //         ├────┼────┼────┼────┼────┼────┐
-// 第2行:  │ S6 │ S7 │ S8 │ S9 │S10 │S11 │  6键
+// 第2行:  │ S6 │ S7 │ S8 │ S9 │S11 │S12 │  6键
 //         ├────┼────┼────┤         │
-// 第3行:  │S12 │S13 │S14 │  编码器  │  3键 + 编码器
+// 第3行:  │S10 │S13 │S14 │  编码器  │  3键 + 编码器
 //         └────┴────┴────┴──────────┘
-// 编码器按键在第3行第4列 RC(2,3)
+// 编码器按键(S15)在第3行第4列 RC(2,3)
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
@@ -43,13 +43,13 @@
 
         default_layer {
             display-name = "Base";
-            // 第1行:  Tab    Q      W      E      R
-            // 第2行:  Esc    A      S      D      F      G
-            // 第3行:  Shift  Z      X      [编码器按键=切层]
+            // 第1行:  Q      W      E      R      T
+            // 第2行:  A      S      D      F      G      H
+            // 第3行:  Z      X      C      [编码器按键=切层]
             bindings = <
-                &kp TAB  &kp Q    &kp W    &kp E    &kp R    &none
-                &kp ESC  &kp A    &kp S    &kp D    &kp F    &kp G
-                &kp LSHFT &kp Z   &kp X    &to FN   &none    &none
+                &kp Q    &kp W    &kp E    &kp R    &kp T    &none
+                &kp A    &kp S    &kp D    &kp F    &kp G    &kp H
+                &kp Z    &kp X    &kp C    &to FN   &none    &none
             >;
 
             // 编码器旋转: 音量控制
@@ -60,11 +60,11 @@
             display-name = "FN";
             // 第1行:  1      2       3       4       5
             // 第2行:  6      7       8       9       0       -
-            // 第3行:  BSPC   DEL     INS     [编码器按键=切回]
+            // 第3行:  =      [      ]      [编码器按键=切回]
             bindings = <
                 &kp N1    &kp N2    &kp N3    &kp N4    &kp N5    &none
                 &kp N6    &kp N7    &kp N8    &kp N9    &kp N0    &kp MINUS
-                &kp BSPC  &kp DEL   &kp INS   &to BASE  &none     &none
+                &kp EQUAL &kp LBKT  &kp RBKT  &to BASE  &none     &none
             >;
 
             // 编码器旋转: 鼠标滚轮上下滚动

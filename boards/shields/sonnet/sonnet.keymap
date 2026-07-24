@@ -1,16 +1,14 @@
 // Sonnet 键盘键位映射
 // 14个按键 + EC11编码器
-// 布局: 4列 x 4行 (第4行第3列是编码器按键)
-//
-// ┌────┬────┬────┬────┐
-// │ k1 │ k2 │ k3 │ k4 │  第1行
-// ├────┼────┼────┼────┤
-// │ k5 │ k6 │ k7 │ k8 │  第2行
-// ├────┼────┼────┼────┤
-// │ k9 │k10 │k11 │k12 │  第3行
-// ├────┼────┤         │
-// │k13 │k14 │ enc_btn │  第4行 (编码器按键切换层)
-// └────┴────┴─────────┘
+// 实际物理布局:
+//         ┌────┬────┬────┬────┬────┐
+// 第1行:  │ S1 │ S2 │ S3 │ S4 │ S5 │  5键
+//         ├────┼────┼────┼────┼────┼────┐
+// 第2行:  │ S6 │ S7 │ S8 │ S9 │S10 │S11 │  6键
+//         ├────┼────┼────┤         │
+// 第3行:  │S12 │S13 │S14 │  编码器  │  3键 + 编码器
+//         └────┴────┴────┴──────────┘
+// 编码器按键在第3行第4列 RC(2,3)
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
@@ -45,36 +43,32 @@
 
         default_layer {
             display-name = "Base";
-            // 第1行:  Tab    Q      W      E
-            // 第2行:  Esc    A      S      D
-            // 第3行:  Shift  Z      X      C
-            // 第4行:  Ctrl   Alt    [编码器按键=切层]  (第4列空)
+            // 第1行:  Tab    Q      W      E      R
+            // 第2行:  Esc    A      S      D      F      G
+            // 第3行:  Shift  Z      X      [编码器按键=切层]
             bindings = <
-                &kp TAB  &kp Q    &kp W    &kp E
-                &kp ESC  &kp A    &kp S    &kp D
-                &kp LSHFT &kp Z   &kp X    &kp C
-                &kp LCTRL &kp LALT &to FN  &none
-            >;
-
-            // 编码器旋转: 鼠标滚轮上下滚动
-            sensor-bindings = <&scroll_encoder>;
-        };
-
-        fn_layer {
-            display-name = "FN";
-            // 第1行:  1      2       3       4
-            // 第2行:  5      6       7       8
-            // 第3行:  9      0       -       =
-            // 第4行:  BSPC   DEL    [编码器按键=切回]  (第4列空)
-            bindings = <
-                &kp N1    &kp N2    &kp N3    &kp N4
-                &kp N5    &kp N6    &kp N7    &kp N8
-                &kp N9    &kp N0    &kp MINUS &kp EQUAL
-                &kp BSPC  &kp DEL   &to BASE  &none
+                &kp TAB  &kp Q    &kp W    &kp E    &kp R    &none
+                &kp ESC  &kp A    &kp S    &kp D    &kp F    &kp G
+                &kp LSHFT &kp Z   &kp X    &to FN   &none    &none
             >;
 
             // 编码器旋转: 音量控制
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        };
+
+        fn_layer {
+            display-name = "FN";
+            // 第1行:  1      2       3       4       5
+            // 第2行:  6      7       8       9       0       -
+            // 第3行:  BSPC   DEL     INS     [编码器按键=切回]
+            bindings = <
+                &kp N1    &kp N2    &kp N3    &kp N4    &kp N5    &none
+                &kp N6    &kp N7    &kp N8    &kp N9    &kp N0    &kp MINUS
+                &kp BSPC  &kp DEL   &kp INS   &to BASE  &none     &none
+            >;
+
+            // 编码器旋转: 鼠标滚轮上下滚动
+            sensor-bindings = <&scroll_encoder>;
         };
     };
 };
